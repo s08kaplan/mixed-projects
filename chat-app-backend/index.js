@@ -1,20 +1,9 @@
 "use strict";
-/* -------------------------------------------------------
-    NODEJS EXPRESS | MIDNIGHT CODERS HOTEL API
-------------------------------------------------------- */
-/*
-    $ cp .env-sample .env
-    $ npm init -y
-    $ npm i express dotenv mongoose express-async-errors
-    $ npm i morgan swagger-autogen swagger-ui-express redoc-express
-    $ mkdir logs
-    $ nodemon
-*/
+
 const express = require("express");
 const app = express();
 
-/* ------------------------------------------------------- */
-// Required Modules:
+
 
 // envVariables to process.env:
 require("dotenv").config();
@@ -44,16 +33,13 @@ app.use(require("cors")())
 app.use('/uploads', express.static('./uploads'))
 
 // Query Handler:
-app.use(require("./src/middlewares/queryHandler"));
+// app.use(require("./src/middlewares/queryHandler"));
 
 // Logger:
 
 // Auhentication:
 app.use(require("./src/middlewares/authentication"));
 
-// findSearchSortPage / res.getModelList:
-
-/* ------------------------------------------------------- */
 // Routes:
 
 // routes/index.js:

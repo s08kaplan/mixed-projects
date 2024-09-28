@@ -68,4 +68,4 @@ RoomSchema.pre("save", function(next) {
     next();
 })
 
-module.exports = model("User", UserSchema);
+module.exports = model("Room", RoomSchema);

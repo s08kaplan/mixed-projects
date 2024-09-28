@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { authSchema, loginUser, registerUser } from "../helpers/formValidation";
+import { authSchema } from "../helpers/formValidation";
 import { authFormInputs } from "../helpers/formInputs";
+import { registerUser, loginUser } from "../helpers/functions/authFunctions";
 
 const AuthForm = ({ formType }) => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const AuthForm = ({ formType }) => {
 
   const onSubmit = async (data) => {
     try {
-      formType === "register" ? registerUser(data.email, data.password) : loginUser(data.email, data.password);
+      formType === "register" ? registerUser(data.email, data.password,data.username) : loginUser(data.email, data.password,data.username);
       
       navigate("/post-todo");
     } catch (error) {

@@ -83,8 +83,7 @@ module.exports = {
 
   delete: async (req, res) => {
   
-    // const data = await User.deleteOne({ _id: req.params.userId})
-    const data = await User.updateOne(
+    const data = await User.deleteOne(
       { _id: req.params.userId },
     );
     res.status(data.deletedCount ? 204 : 404).send({

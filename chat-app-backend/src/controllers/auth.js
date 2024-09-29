@@ -10,7 +10,6 @@ const {
 
 module.exports = {
   login: async (req, res) => {
-
     const { username, email, password } = req.body;
 
     if (!(username && email && password)) {
@@ -18,7 +17,10 @@ module.exports = {
       throw new Error("Username,email and password must be entered");
     }
 
-    const user = await User.findOne({ $and: [{ username }, { email }], password });
+    const user = await User.findOne({
+      $and: [{ username }, { email }],
+      password,
+    });
 
     if (!user) {
       res.errorStatusCode = 401;
@@ -27,7 +29,7 @@ module.exports = {
       );
     }
 
-    if (user && user.password == passwordEncrypt(password) && user.isActive) {
+    if (user && user.password == passwordEncrypt(password)) {
       // console.log("user password checked");
       let tokenData = await Token.findOne({ userId: user.id });
       // console.log("tokenData: ",tokenData);
@@ -38,20 +40,18 @@ module.exports = {
         // console.log("tokenData",tokenData);
       }
 
-       res.status(200).send({
-      error: false,
-      token: tokenData.token,
-      user,
-    });
+      res.status(200).send({
+        error: false,
+        token: tokenData.token,
+        user,
+      });
     }
-
-   
   },
 
   logout: async (req, res) => {
-  
-    const token = req.headers?.authorization.split(" ")[1];
-
+    // console.log(req.headers);
+    const token = req.headers?.authorization?.split(" ")[1];
+    // console.log(token);
     const { deletedCount } = await Token.deleteOne({ token });
     res.status(deletedCount ? 204 : 404).send({
       error: !!!deletedCount,

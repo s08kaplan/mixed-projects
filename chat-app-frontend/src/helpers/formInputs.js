@@ -15,4 +15,9 @@ export const authFormInputs = [
       name: "password",
       type: "password",
     },
+    {
+      label: "Image",
+      name: "image",
+      type: "text",
+    },
   ];

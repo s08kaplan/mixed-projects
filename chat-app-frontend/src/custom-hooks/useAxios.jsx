@@ -1,19 +1,19 @@
 import axios from "axios"
-import { getSessionUserData } from "../helpers/crypto";
+import { useSelector } from "react-redux";
+
 
 const useAxios = () => {
-   const userData = getSessionUserData()
+const { token } = useSelector(state => state.auth)
 
     const axiosPublic = axios.create({
-        baseURL: `${import.meta.env.VITE_BASE_URL}`,
+        baseURL: import.meta.env.VITE_BASE_URL,
       });
 
-      const axiosWithToken = axios.create({
-        baseURL: `${import.meta.env.VITE_BASE_URL}`,
-        headers: {Authorization: `Token ${userData?.data?.token}`}
+    const axiosWithToken = axios.create({
+        baseURL: import.meta.env.VITE_BASE_URL,
+        headers: {"Authorization": `Token ${token}`}
       });
-    
-     
+
   return { axiosPublic, axiosWithToken }
 }
 

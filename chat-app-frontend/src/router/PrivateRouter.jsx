@@ -1,10 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Outlet, NavLink } from "react-router-dom"
-import { getSessionUserData } from "../helpers/crypto"
 
 const PrivateRouter = () => {
-  const user = getSessionUserData()
-  return user ? <Outlet/> : <NavLink to = "/login" />
+const { token } = useSelector(state=> state.auth)
+  return token ? <Outlet/> : <NavLink to = "/login" />
 }
 
 export default PrivateRouter

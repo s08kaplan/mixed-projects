@@ -7,6 +7,7 @@ import Rooms from "../pages/Rooms";
 import NewRoom from "../pages/NewRoom";
 import Profile from "../pages/Profile";
 import PrivateRouter from "./PrivateRouter";
+import NotFound from "../pages/NotFound";
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
       <Route path="profile" element={<PrivateRouter />}>
         <Route path="" element={<Profile />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

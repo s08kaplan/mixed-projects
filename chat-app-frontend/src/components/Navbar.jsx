@@ -9,16 +9,19 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { CiMail } from "react-icons/ci";
-import logo from "../assets/chat.png"
+import logo from "../assets/chat.png";
 import { Link } from "react-router-dom";
 import { getSessionUserData } from "../helpers/crypto";
+import useAxios from "../custom-hooks/useAxios";
+import useAuthCalls from "../custom-hooks/useAuthCalls";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Home", to: "/", current: true },
   { name: "Rooms", to: "/rooms", current: false },
-  { name: "NewRoom", to: "/new-room", current: false },
-  { name: "Login", to: "/login", current: false },
-  { name: "Register", to: "/register", current: false },
+  { name: "New Room", to: "/new-room", current: false },
+  // { name: "Login", to: "/login", current: false },
+  // { name: "Register", to: "/register", current: false },
 ];
 
 function classNames(...classes) {
@@ -26,7 +29,12 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const user = getSessionUserData();
+  const { user } = useSelector((state) => state.auth);
+  const { logout } = useAuthCalls();
+  console.log("navbar user : ", user);
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -48,11 +56,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src={logo}
-                className="h-8 w-auto"
-              />
+              <img alt="Your Company" src={logo} className="h-8 w-auto" />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -81,8 +85,9 @@ export default function Navbar() {
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
-              <CiMail aria-hidden="true" className="h-6 w-6"/>
-              
+              {user && user?.token && (
+                <CiMail aria-hidden="true" className="h-6 w-6" />
+              )}
             </button>
 
             {/* Profile dropdown */}
@@ -92,7 +97,13 @@ export default function Navbar() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   {user && user.image ? (
-                    <img src={user?.image} alt={`${user?.username} profile-photo`} />
+                    <img
+                      src={user?.image}
+                      alt={`${user?.username} profile-photo`}
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
                   ) : (
                     <img
                       alt="unknown user image"
@@ -108,20 +119,31 @@ export default function Navbar() {
               >
                 <MenuItem>
                   <Link
-                    to={user ? "/profile" : "/login"}
+                    to={user && user?.username ? "/profile" : "/login"}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
-                    Your Profile
+                    Profile
                   </Link>
                 </MenuItem>
-                <MenuItem>
-                  <Link
-                    to={user ? "/" : "/login"}
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                  >
-                   {user ? "Sign out" : "Login"}
-                  </Link>
-                </MenuItem>
+                {!user?.username ? (
+                  <MenuItem>
+                    <Link
+                      to="/login"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                    >
+                      Login
+                    </Link>
+                  </MenuItem>
+                ) : (
+                  <MenuItem onClick={handleLogout}>
+                    <Link
+                      to="#"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                    >
+                      Sign out
+                    </Link>
+                  </MenuItem>
+                )}
               </MenuItems>
             </Menu>
           </div>
@@ -133,8 +155,8 @@ export default function Navbar() {
           {navigation.map((item) => (
             <DisclosureButton
               key={item.name}
-              as="a"
-              href={item.href}
+              as={Link}
+              to={item.to}
               aria-current={item.current ? "page" : undefined}
               className={classNames(
                 item.current

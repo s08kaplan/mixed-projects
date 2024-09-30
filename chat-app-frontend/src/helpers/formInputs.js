@@ -21,3 +21,7 @@ export const authFormInputs = [
       type: "text",
     },
   ];
+
+  export const roomInputs = [
+    { label:"", name:"", type:""}
+  ]

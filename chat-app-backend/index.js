@@ -35,7 +35,7 @@ app.use('/uploads', express.static('./uploads'))
 // Query Handler:
 // app.use(require("./src/middlewares/queryHandler"));
 
-// Logger:
+
 
 // Auhentication:
 app.use(require("./src/middlewares/authentication"));
@@ -49,7 +49,7 @@ app.use("/", require("./src/routes/"));
 app.all("/", (req, res) => {
   res.send({
     error: false,
-    message: "Welcome to HOTEL API",
+    message: "Welcome to Chat API",
     user: req.user
   });
 });

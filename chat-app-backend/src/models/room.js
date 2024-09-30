@@ -24,6 +24,13 @@ const RoomSchema = new Schema(
       },
     ],
 
+    adminInvitations: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+
     users: [
       {
         userId: {
@@ -48,24 +55,31 @@ RoomSchema.methods.isAdminCheck = function (userId) {
   );
 };
 
-RoomSchema.methods.addAdmin = async function (userId, newAdminId) {
-    if( !this.isAdminCheck(userId) ) {
-        throw new Error('Only admins can add other admins.');
-    }
+RoomSchema.methods.inviteAdmin = async function (inviterId, newAdminId) {
+  if (!this.isAdminCheck(inviterId)) {
+    throw new Error('Only admins can invite other admins.');
+  }
+  if (this.admins.includes(newAdminId) || this.adminInvitations.includes(newAdminId)) {
+    throw new Error('User is already an admin or has a pending invitation.');
+  }
+  
+  this.adminInvitations.push(newAdminId);
+  return this.save();
+};
 
-    if(this.admins.includes(newAdminId)) {
-        throw new Error('User is already an admin.');
-    }
 
-    this.admins.push(newAdminId)
-    return this.save()
-}
+RoomSchema.methods.acceptAdmin = async function (userId) {
+  const invitationIndex = this.adminInvitations.indexOf(userId);
+  
+  if (invitationIndex === -1) {
+    throw new Error('No admin invitation found for this user.');
+  }
 
-RoomSchema.pre("save", function(next) {
-    if(this.isNew) {        //! isNew => when a new document created first time in Mongoose this property is set to true and once the document saved to the database for the first time isNew set to false 
-        this.admins.push(this.createdBy);
-    }
-    next();
-})
+  // Remove from invitations and add to admins
+  this.adminInvitations.splice(invitationIndex, 1);
+  this.admins.push(userId);
+  
+  return this.save();
+};
 
 module.exports = model("Room", RoomSchema);

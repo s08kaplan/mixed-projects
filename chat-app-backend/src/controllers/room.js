@@ -1,6 +1,7 @@
 "use strict";
 
 const Room = require("../models/room");
+const User = require("../models/user");
 
 
   
@@ -17,19 +18,52 @@ module.exports = {
 
   create: async (req, res) => {
 
-   const userId = req.user._id
-
+   const userId = req.user?._id
+// console.log(userId);
    const user = await User.findOne({_id: userId})
+
    if(!user)throw new Error("User not found")
     
-   await Room.addAdmin(userId)
+   const data =  await Room.create({name: req.body.name, createdBy: userId, admins:[userId]})
 
-   const data = await Room.create({name: user?.username, createdBy: userId})
-
+    
     res.status(201).send({
       error: false,
       data,
     });
+  },
+
+  inviteAdmin: async (req, res) => {
+    const userId = req.user._id; 
+    const { roomId, newAdminId } = req.body;
+     
+    const room = await Room.findOne({_id:roomId})
+    if(!room) throw new Error("Room not found!")
+
+    const data = await room.inviteAdmin(userId, newAdminId);
+      res.status(200).send({
+        error: false,
+        message: "New admin added to the room successfully ",
+        data
+      })
+  },
+
+
+  acceptAdmin: async (req, res) => {
+    const userId = req.user._id; 
+    const { roomId } = req.body;
+
+    const room = await Room.findById(roomId);
+      if (!room) throw new Error("Room not found");
+
+   const data = await room.acceptAdmin(userId);
+
+   res.status(200).send({
+    error:false,
+    message: "Admin invitation accepted successfully",
+    data
+   })
+
   },
 
   read: async (req, res) => {

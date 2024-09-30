@@ -16,5 +16,11 @@ router
   .patch(Room.update)
   .delete(Room.delete);
 
+router
+  .post("/:roomId/invite-admin", Room.inviteAdmin)  
+
+  router
+  .post("/:roomId/accept-admin", Room.acceptAdmin);
+  
   
 module.exports = router;

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import useRooms from '../custom-hooks/useRooms'
 
 const NewRoom = () => {
+  const { newRoom } = useRooms()
+
+  useEffect(() => {
+ 
+  }, [])
+  
   return (
-    <div>NewRoom</div>
+    <div>
+      
+    </div>
   )
 }
 

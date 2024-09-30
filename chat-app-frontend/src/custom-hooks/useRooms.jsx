@@ -31,7 +31,7 @@ const useRooms = () => {
         dispatch(fetchFail(error))
       }
     }
-  return { getRoomsInfo }
+  return { getRoomsInfo, newRoom }
 }
 
 export default useRooms

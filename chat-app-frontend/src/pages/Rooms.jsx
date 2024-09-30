@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useRooms from '../custom-hooks/useRooms'
+import NewRoom from '../components/NewRoom'
 
 const Rooms = () => {
 
   const { getRoomsInfo } = useRooms()
+
+  
 
   useEffect(() => {
     getRoomsInfo()
@@ -11,7 +14,9 @@ const Rooms = () => {
   
 
   return (
-    <div>Rooms</div>
+    <section>
+      <NewRoom/>
+    </section>
   )
 }
 

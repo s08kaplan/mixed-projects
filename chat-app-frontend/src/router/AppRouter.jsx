@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Rooms from "../pages/Rooms";
-import NewRoom from "../pages/NewRoom";
+// import NewRoom from "../pages/NewRoom";
 import Profile from "../pages/Profile";
 import PrivateRouter from "./PrivateRouter";
 import NotFound from "../pages/NotFound";
@@ -18,9 +18,9 @@ const AppRouter = () => {
       <Route path="rooms" element={<PrivateRouter />}>
         <Route path="" element={<Rooms />} />
       </Route>
-      <Route path="new-room" element={<PrivateRouter />}>
+      {/* <Route path="new-room" element={<PrivateRouter />}>
         <Route path="" element={<NewRoom />} />
-      </Route>
+      </Route> */}
       <Route path="profile" element={<PrivateRouter />}>
         <Route path="" element={<Profile />} />
       </Route>

@@ -63,6 +63,19 @@ const initialState = {
         state.token = "";
       },
   
+      getUserInfo:(state,{payload})=> {
+        state.loading = false;
+        state.error = false;
+        state.user = {
+          ...state.user,
+          id: payload?._id,
+          username: payload?.username,
+          email: payload?.email,
+          image: payload?.image,
+          isAdmin: payload?.isAdmin,
+        };
+      },
+
       updateUserInfo:(state,{payload})=> {
         state.loading = false;
         state.error = false;
@@ -93,6 +106,7 @@ const initialState = {
     loginSuccess,
     logoutSuccess,
     registerSuccess,
+    getUserInfo,
     updateUserInfo,
     clearError 
   } = authSlice.actions;

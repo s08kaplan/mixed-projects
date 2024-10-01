@@ -13,9 +13,8 @@ module.exports = {
     if (!token) {
       throw new Error("Please log in first");
     }
-    const customFilters =
-      req.user?.isAdmin || req.user?.isStaff ? {} : { isDeleted: false };
-    const data = await User.find(customFilters).populate("userId");
+   
+    const data = await User.find()
 
     res.status(200).send({
       error: false,

@@ -15,7 +15,7 @@ module.exports = {
     }
     const customFilters =
       req.user?.isAdmin || req.user?.isStaff ? {} : { isDeleted: false };
-    const data = await User.find(customFilters);
+    const data = await User.find(customFilters).populate("userId");
 
     res.status(200).send({
       error: false,

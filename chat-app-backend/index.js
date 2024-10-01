@@ -33,7 +33,7 @@ app.use(require("cors")())
 app.use('/uploads', express.static('./uploads'))
 
 // Query Handler:
-// app.use(require("./src/middlewares/queryHandler"));
+app.use(require("./src/middlewares/queryHandler"));
 
 
 

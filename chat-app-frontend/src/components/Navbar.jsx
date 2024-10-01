@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 const navigation = [
   { name: "Home", to: "/", current: true },
   { name: "Rooms", to: "/rooms", current: false },
-  { name: "New Room", to: "/new-room", current: false },
+  // { name: "New Room", to: "/new-room", current: false },
   // { name: "Login", to: "/login", current: false },
   // { name: "Register", to: "/register", current: false },
 ];

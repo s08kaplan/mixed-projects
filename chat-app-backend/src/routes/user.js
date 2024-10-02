@@ -16,5 +16,10 @@ router
   .patch(User.update)
   .delete(User.delete);
 
+router
+  .post("/friend-request", User.sendFriendRequest)
+  .post("/accept-friend-request", User.acceptFriendRequest)
+  .post("/decline-friend-request", User.declineFriendRequest)  
+
   
 module.exports = router;

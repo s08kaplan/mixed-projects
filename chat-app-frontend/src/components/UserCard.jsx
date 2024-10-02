@@ -9,6 +9,7 @@ const UserCard = () => {
   const { user } = useSelector((state) => state.auth);
   const { axiosWithToken } = useAxios();
 
+  
   const [users, setUsers] = useState([]);
 
   console.log(user);
@@ -22,6 +23,8 @@ const UserCard = () => {
       console.log(error);
     }
   };
+
+
   useEffect(() => {
     getUsers();
   }, []);

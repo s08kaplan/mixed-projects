@@ -17,6 +17,11 @@ const RoomSchema = new Schema(
       required: true,
     },
 
+    image:{
+      type: String,
+      trim: true
+    },
+
     admins: [
       {
         type: Schema.Types.ObjectId,

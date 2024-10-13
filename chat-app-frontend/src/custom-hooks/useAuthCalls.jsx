@@ -45,7 +45,7 @@ const useAuthCalls = () => {
         }
     }
 
-    const getUsers = async () => {
+    const getUsers = async () => {    
         dispatch(fetchStart())
         try {
           const { data } = await axiosWithToken.get("users")

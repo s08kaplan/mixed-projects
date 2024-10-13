@@ -39,11 +39,8 @@ module.exports = {
   },
 
   read: async (req, res) => {
-    const customFilters = req.user?.isAdmin
-      ? { _id: req.params.userId }
-      : { _id: req.user._id }; //! if the user is not Admin only his/her own record he/she could see
-
-    const data = await User.findOne({ ...customFilters });
+  
+    const data = await User.findOne({ _id: req.params.userId});
 
     res.status(202).send({
       error: false,

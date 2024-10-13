@@ -8,7 +8,7 @@ const User = require("../models/user");
 module.exports = {
   list: async (req, res) => {
 
-    const data = await Room.find();
+    const data = await res.getModelList(Room);
 
     res.status(200).send({
       error: false,

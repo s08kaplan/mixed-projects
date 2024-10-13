@@ -18,6 +18,7 @@ module.exports = async function () {
       username: "admin",
       password: "aA?123456",
       email: "admin@site.com",
+      image:"https://cdn.pixabay.com/photo/2013/07/13/13/46/padlock-161523_640.png",
       isAdmin: true,
     },
 
@@ -26,6 +27,7 @@ module.exports = async function () {
       username: "Ali",
       password: "aA?123456",
       email: "ali@site.com",
+      image:"https://cdn.pixabay.com/photo/2022/10/20/19/55/muhammadaliofficial-official-7535685_640.jpg",
       isAdmin: false,
     },
     {
@@ -33,6 +35,7 @@ module.exports = async function () {
       username: "Veli",
       password: "aA?123456",
       email: "veli@site.com",
+      image:"",
       isAdmin: false,
     },
     {
@@ -40,6 +43,7 @@ module.exports = async function () {
       username: "Aydan",
       password: "aA?123456",
       email: "aydan@site.com",
+      image:"",
       isAdmin: false,
     },
     {
@@ -47,6 +51,7 @@ module.exports = async function () {
       username: "Canan",
       password: "aA?123456",
       email: "canan@site.com",
+      image:"",
       isAdmin: false,
     },
     {
@@ -54,6 +59,7 @@ module.exports = async function () {
       username: "Emel",
       password: "aA?123456",
       email: "emel@site.com",
+      image:"",
       isAdmin: false,
     },
   ]);

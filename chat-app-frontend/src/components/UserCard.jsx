@@ -4,11 +4,12 @@ import useAxios from "../custom-hooks/useAxios";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import useAuthCalls from "../custom-hooks/useAuthCalls";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UserCard = () => {
   const { user } = useSelector((state) => state.auth);
   const { axiosWithToken } = useAxios();
-
+  const navigate = useNavigate()
   
   const [users, setUsers] = useState([]);
 
@@ -34,7 +35,7 @@ const UserCard = () => {
       <ul className="divide-y divide-gray-100 flex flex-col">
         {users.map((person) => (
           <li key={person._id} className="flex justify-between  gap-x-6 py-5">
-            <div className="flex items-center min-w-0 gap-x-4">
+            <div onClick={() => navigate(`/friend-profile/${person._id}`)} className="flex items-center min-w-0 gap-x-4 hover:cursor-pointer">
               <img
                 alt={`${person.username} image`}
                 src={person.image}

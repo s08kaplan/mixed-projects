@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage/session";
 import authReducer from '../Slices/authSlice'
 import roomReducer from '../Slices/roomSlice'
+import usersReducer from '../Slices/usersSlice'
 
 
 
@@ -26,7 +27,8 @@ const persistedReducer = persistReducer(persistConfig, authReducer)
 export const store = configureStore({
   reducer: {
     auth: persistedReducer,
-    room: roomReducer
+    room: roomReducer,
+    users: usersReducer
   },
   devTools: import.meta.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>

@@ -38,7 +38,7 @@ const Profile = () => {
       {/* right  groups */}
       <article className="">
        { roomsByUser?.map(rooms => (
-          <div key={rooms._id}>
+          <div key={rooms._id} onClick={() => navigate(`/rooms/${rooms._id}`)} className="hover:cursor-pointer">
             <div><img src="" alt="" /> </div>
             <span>{rooms.name}</span>
           </div>

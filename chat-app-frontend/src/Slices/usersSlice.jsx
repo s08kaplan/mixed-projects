@@ -20,6 +20,7 @@ const usersSlice = createSlice({
         state.loading = false;
         state.error = false;
         state[payload.url] = payload?.data?.data;
+        console.log("payload in users slice: ",payload);
       },
   
       fetchFail: (state, { payload }) => {

@@ -35,7 +35,7 @@ module.exports = async function () {
       username: "Veli",
       password: "aA?123456",
       email: "veli@site.com",
-      image:"",
+      image:"https://cdn.pixabay.com/photo/2018/11/08/23/52/man-3803551_640.jpg",
       isAdmin: false,
     },
     {
@@ -43,7 +43,7 @@ module.exports = async function () {
       username: "Aydan",
       password: "aA?123456",
       email: "aydan@site.com",
-      image:"",
+      image:"https://cdn.pixabay.com/photo/2022/11/12/15/43/reed-7587271_640.jpg",
       isAdmin: false,
     },
     {
@@ -51,7 +51,7 @@ module.exports = async function () {
       username: "Canan",
       password: "aA?123456",
       email: "canan@site.com",
-      image:"",
+      image:"https://cdn.pixabay.com/photo/2021/10/26/02/26/woman-6742425_640.jpg",
       isAdmin: false,
     },
     {
@@ -59,7 +59,7 @@ module.exports = async function () {
       username: "Emel",
       password: "aA?123456",
       email: "emel@site.com",
-      image:"",
+      image:"https://cdn.pixabay.com/photo/2023/11/10/02/30/woman-8378634_640.jpg",
       isAdmin: false,
     },
   ]);

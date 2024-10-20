@@ -40,16 +40,16 @@ const NewRoom = () => {
       </button>
 
       {open && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute p-3 -translate-x-1/2 -translate-y-1/2 rounded-lg top-1/2 left-1/2 bg-slate-300">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center items-center gap-3"
+            className="flex flex-col items-center justify-center gap-3"
           >
             {inputs.map((item) => (
               <div key={item.name} className="flex flex-col gap-3">
                 <label
                   htmlFor={item.name}
-                  className="leading-7 text-sm text-white text-center"
+                  className="text-sm leading-7 text-center text-gray-900"
                 >
                  {item.label}
                 </label>
@@ -57,7 +57,7 @@ const NewRoom = () => {
                   type="text"
                   id={item.name}
                   name={item.name}
-                  className="w-72 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  className="px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-white border border-gray-300 rounded outline-none w-72 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
                   onChange={handleChange}
                 />
               </div>

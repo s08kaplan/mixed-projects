@@ -38,9 +38,9 @@ const AuthForm = ({ formType }) => {
     navigate(targetPath);
   };
   return (
-    <section className="flex justify-center items-center h-dvh">
-      <main className="p-4 border rounded-lg shadow-sm bg-light">
-        <h2 className="text-center mb-4">
+    <section className="flex items-center justify-center h-dvh">
+      <main className="p-4 border rounded-lg shadow-sm bg-[rgba(0,0,0,0.3)]">
+        <h2 className="mb-4 text-center">
           {formType === "login" ? "Login Form" : "Register Form"}
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -81,7 +81,7 @@ const AuthForm = ({ formType }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+            className="px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-sky-600 hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
           >
             {isSubmitting
               ? "Submitting..."
@@ -90,14 +90,14 @@ const AuthForm = ({ formType }) => {
               : "Login"}
           </button>
 
-          <div className="text-center mt-3">
+          <div className="mt-3 text-center">
             <span>
               {formType === "login"
                 ? "Don't have an account?"
                 : "Already have an account?"}
             </span>
             <button
-              className="ml-2 rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+              className="px-3 py-2 ml-2 text-sm font-semibold text-white rounded-md shadow-sm bg-sky-600 hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
               onClick={handleNavigate}
             >
               {formType === "login" ? "Register" : "Login"}

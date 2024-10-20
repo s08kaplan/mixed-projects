@@ -39,9 +39,14 @@ module.exports = {
   },
 
   read: async (req, res) => {
-  
-    const data = await User.findOne({ _id: req.params.userId});
-
+    // console.log("--------------");
+    const userId = req.params.userId;
+    const data = await res.getModelList(User, { _id: userId },[
+      {path:"sentRequests", select:"_id username email image"}, 
+      {path:"receivedRequests", select:"_id username email image"}
+    ]);
+    // const data = await User.findOne({_id: userId})
+    // console.log(data);
     res.status(202).send({
       error: false,
       data,
@@ -172,11 +177,10 @@ module.exports = {
 
     await recipient.save();
     await sender.save();
-  
+
     res.status(200).send({
       error: false,
       message: "Friend request declined",
-      
-    })
+    });
   },
 };

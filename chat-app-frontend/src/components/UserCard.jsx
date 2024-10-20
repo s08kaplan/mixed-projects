@@ -31,18 +31,18 @@ const UserCard = () => {
   }, []);
 
   return (
-    <section className="flex justify-start absolute left-0 m-2 p-3 border border-gray-500">
-      <ul className="divide-y divide-gray-100 flex flex-col">
+    <section className="absolute left-0 flex justify-start p-3 m-2 border border-gray-500">
+      <ul className="flex flex-col divide-y divide-gray-100">
         {users.map((person) => (
-          <li key={person._id} className="flex justify-between  gap-x-6 py-5">
+          <li key={person._id} className="flex justify-between py-5 gap-x-6">
             <div onClick={() => navigate(`/friend-profile/${person._id}`)} className="flex items-center min-w-0 gap-x-4 hover:cursor-pointer">
               <img
                 alt={`${person.username} image`}
                 src={person.image}
-                className="h-12 w-12 flex-none rounded-full bg-gray-50"
+                className="flex-none w-12 h-12 rounded-full bg-gray-50"
               />
-              <div className="min-w-0 flex-auto">
-                <p className="text-sm font-semibold leading-6 text-white">
+              <div className="flex-auto min-w-0">
+                <p className="text-sm font-semibold leading-6 text-primary">
                   {person.username}
                 </p>
               </div>

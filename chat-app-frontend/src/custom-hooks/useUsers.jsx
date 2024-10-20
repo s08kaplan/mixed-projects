@@ -22,8 +22,36 @@ const useUsers = () => {
         
     }
 
+    const sendFriendRequest = async (url,postData) => { 
+        console.log("id in sendFriendRequest:", postData); 
+        console.log("url sendFriendRequest:", url); 
+        dispatch(fetchStart())
+        try {
+          const {data} = await axiosWithToken.post(`users/friend-request`,postData)  
+          console.log(data);
+          dispatch(getAllUsers({data,url}))
+        } catch (error) {
+            console.log(error);
+            dispatch(fetchFail(error))
+        }
+        
+    }
+
+    // const getFriendRequest = async (url) => { 
+    //     dispatch(fetchStart())
+    //     try {
+    //       const {data} = await axiosWithToken(`users/friend-request`)  
+    //       console.log(data);
+    //       dispatch(getAllUsers({data,url}))
+    //     } catch (error) {
+    //         console.log(error);
+    //         dispatch(fetchFail(error))
+    //     }
+        
+    // }
+
    
-  return { getUsers }
+  return { getUsers, sendFriendRequest }
 }
 
 export default useUsers

@@ -100,9 +100,7 @@ export default function Navbar() {
                     <img
                       src={user?.image}
                       alt={`${user?.username} profile-photo`}
-                      width={50}
-                      height={50}
-                      className="rounded-full"
+                      className="object-cover w-10 rounded-full h-14"
                     />
                   ) : (
                     <img

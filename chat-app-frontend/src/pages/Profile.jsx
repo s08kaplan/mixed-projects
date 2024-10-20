@@ -52,10 +52,12 @@ const Profile = () => {
       <article className="flex-1">
         {/* <UserCard /> */}
         {userDetail[0]?.receivedRequests?.map((detail) => (
-          <div key={detail?._id}>
-            <img src={detail?.image} alt="profile image" />
-            <span>{detail?.username}</span>
-          </div>
+          <figure key={detail?._id} className="flex flex-col justify-center p-3">
+            <div>
+              <img src={detail?.image} alt="profile image" className="object-cover w-20 h-20 rounded-full" />
+            </div>
+            <span className="mx-8 my-2">{detail?.username}</span>
+          </figure>
         ))}
       </article>
       {/* main messaging */}

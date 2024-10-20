@@ -38,7 +38,7 @@ const FriendProfile = () => {
       <article className="flex flex-col items-center justify-center gap-2 p-2">
         <img
           src={
-            userDetail[0]?.image ||
+           userDetail[0]?.image ||
             "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png"
           }
           alt="user image"

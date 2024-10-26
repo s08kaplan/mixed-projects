@@ -46,6 +46,21 @@ const Profile = () => {
     getRoomsCreatedByUser();
   }, [user?.id, navigate]);
 
+  const handleFriendStatus = async (e,id) => {
+    // console.log(e.target.textContent);
+    console.log(id);
+    const { textContent } = e.target
+    // if( textContent == "Accept" ){
+    //   const { data } = await axiosWithToken.post("users/accept-friend-request",{senderId:id})
+    // console.log(data);
+    // }else {
+    //   const { data } = await axiosWithToken.post("users/decline-friend-request",{senderId:id})
+    //   console.log(data);
+    // }
+    textContent == "Accept"  ? await axiosWithToken.post("users/accept-friend-request",{senderId:id}) : await axiosWithToken.post("users/decline-friend-request",{senderId:id})
+    
+  }
+
   return (
     <section className="flex justify-center text-primary">
       {/* left friends list to chat*/}
@@ -57,6 +72,8 @@ const Profile = () => {
               <img src={detail?.image} alt="profile image" className="object-cover w-20 h-20 rounded-full" />
             </div>
             <span className="mx-8 my-2">{detail?.username}</span>
+            <button onClick={(e)=>handleFriendStatus(e,detail?._id)} className="flex items-center justify-center w-20 h-8 text-white transition-colors duration-200 bg-green-600 border rounded-lg border-white-800 hover:bg-white hover:border-lime-500 hover:text-green-600">Accept</button>
+            <button onClick={(e)=>handleFriendStatus(e,detail?._id)} className="flex items-center justify-center w-20 h-8 text-white transition-colors duration-200 bg-red-600 border rounded-lg border-white-800 hover:bg-white hover:text-red-600 hover:border-lime-500">Decline</button>
           </figure>
         ))}
       </article>
@@ -84,6 +101,9 @@ const Profile = () => {
             <span>{rooms.name}</span>
           </div>
         ))}
+      </article>
+      <article>
+        
       </article>
     </section>
   );

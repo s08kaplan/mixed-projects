@@ -79,7 +79,7 @@ export default function Navbar() {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
+            {/* <button
               type="button"
               className="relative p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             >
@@ -88,7 +88,7 @@ export default function Navbar() {
               {user && user?.token && (
                 <CiMail aria-hidden="true" className="w-6 h-6" />
               )}
-            </button>
+            </button> */}
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">

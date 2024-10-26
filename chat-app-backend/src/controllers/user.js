@@ -42,6 +42,7 @@ module.exports = {
     // console.log("--------------");
     const userId = req.params.userId;
     const data = await res.getModelList(User, { _id: userId },[
+      {path:"friends", select:"_id username email image"}, 
       {path:"sentRequests", select:"_id username email image"}, 
       {path:"receivedRequests", select:"_id username email image"}
     ]);

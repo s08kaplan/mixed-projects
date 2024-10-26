@@ -103,7 +103,11 @@ const Profile = () => {
         ))}
       </article>
       <article>
-        
+        {
+          userDetail && userDetail[0]?.friends?.map(friend => (
+            <div>{friend.username}</div>
+          ))
+        }
       </article>
     </section>
   );

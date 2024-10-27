@@ -49,6 +49,7 @@ const useAuthCalls = () => {
         dispatch(fetchStart())
         try {
           const { data } = await axiosWithToken.get("users")
+          console.log(data);
             dispatch(getUserInfo(data))
         } catch (error) {
             dispatch(fetchFail(error))

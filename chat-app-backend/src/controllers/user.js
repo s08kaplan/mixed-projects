@@ -12,7 +12,7 @@ module.exports = {
       throw new Error("Please log in first");
     }
 
-    const data = await res.getModelList(User,{_id:req?.user._id},[
+    const data = await res.getModelList(User,{},[
       {path:"friends", select:"_id username email image"}, 
       {path:"sentRequests", select:"_id username email image"}, 
       {path:"receivedRequests", select:"_id username email image"}

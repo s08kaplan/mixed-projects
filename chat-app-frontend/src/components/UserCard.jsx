@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const UserCard = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.users);
   const { axiosWithToken } = useAxios();
   const navigate = useNavigate()
   

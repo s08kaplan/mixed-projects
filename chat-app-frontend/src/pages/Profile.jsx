@@ -5,6 +5,7 @@ import useAxios from "../custom-hooks/useAxios";
 import UserCard from "../components/UserCard";
 import avatar from "../assets/avatar.png";
 import useUsers from "../custom-hooks/useUsers";
+import ListFriends from "../components/ListFriends";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -102,13 +103,7 @@ const Profile = () => {
           </div>
         ))}
       </article>
-      <article>
-        {
-          userDetail && userDetail[0]?.friends?.map(friend => (
-            <div>{friend.username}</div>
-          ))
-        }
-      </article>
+     <ListFriends/>
     </section>
   );
 };

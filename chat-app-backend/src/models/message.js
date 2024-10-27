@@ -8,15 +8,17 @@ const MessageSchema = new Schema(
   {
     roomId: {
       type: Schema.Types.ObjectId,
-      ref:"Room",
+      ref: "Room",
       index: true,
       required: true,
     },
 
     messages: [
       {
-        userId: {type:Schema.Types.ObjectId, ref:"Room", required: true},
-        message: { type: String, trim: true },
+        sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        content: { type: String, trim: true, required: true },
+        receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        isRead: { type: Boolean, default: false },
       },
     ],
   },

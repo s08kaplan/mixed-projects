@@ -12,13 +12,14 @@ const FriendProfile = () => {
   const { getUsers, sendFriendRequest } = useUsers();
   const [userInfo, setUserInfo] = useState({});
 
+  console.log("user: ",user);
+  const userIds = userDetail[0]?.friends.map(usr => usr._id)
+  console.log(userIds);
+  const isFriend = user?.friends.find((person) =>person.includes(userIds));
   
-  const isFriend = user?.friends.find((user) =>
-    userDetail?.friends.includes(user)
-  );
   console.log(isFriend);
   console.log(userDetail);
-  console.log("friend id: ", friendId);
+  // console.log("friend id: ", friendId);
   
   useEffect(() => {
     getUsers(friendId, "userDetail");

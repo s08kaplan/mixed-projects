@@ -51,6 +51,7 @@ const initialState = {
           email: payload?.user?.email,
           image: payload?.user?.image,
           isAdmin: payload.user?.isAdmin,
+          friends: payload.user?.friends
         };
   
         state.token = payload?.token;

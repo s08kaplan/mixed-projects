@@ -12,10 +12,10 @@ module.exports = {
       throw new Error("Please log in first");
     }
 
-    const data = await res.getModelList(User,{},[
-      {path:"friends", select:"_id username email image"}, 
-      {path:"sentRequests", select:"_id username email image"}, 
-      {path:"receivedRequests", select:"_id username email image"}
+    const data = await res.getModelList(User, {}, [
+      { path: "friends", select: "_id username email image" },
+      { path: "sentRequests", select: "_id username email image" },
+      { path: "receivedRequests", select: "_id username email image" },
     ]);
 
     res.status(200).send({
@@ -45,10 +45,10 @@ module.exports = {
   read: async (req, res) => {
     // console.log("--------------");
     const userId = req.params.userId;
-    const data = await res.getModelList(User, { _id: userId },[
-      {path:"friends", select:"_id username email image"}, 
-      {path:"sentRequests", select:"_id username email image"}, 
-      {path:"receivedRequests", select:"_id username email image"}
+    const data = await res.getModelList(User, { _id: userId }, [
+      { path: "friends", select: "_id username email image" },
+      { path: "sentRequests", select: "_id username email image" },
+      { path: "receivedRequests", select: "_id username email image" },
     ]);
     // const data = await User.findOne({_id: userId})
     // console.log(data);
@@ -125,6 +125,10 @@ module.exports = {
 
     const recipient = await User.findById(recipientId);
     const sender = await User.findById(senderId);
+
+    // !-----------------
+    //! console.log(recipient);
+    // !-----------------
 
     if (!sender || !recipient) {
       res.errorStatusCode = 404;

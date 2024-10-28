@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 const UserCard = () => {
   const { user } = useSelector((state) => state.users);
+  const { user:authUser } = useSelector((state) => state.auth);
   const { axiosWithToken } = useAxios();
   const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
 
-  console.log(user);
+  console.log(authUser);
 
   const getUsers = async () => {
     try {
@@ -27,14 +28,17 @@ const UserCard = () => {
 
   useEffect(() => {
     getUsers();
-  }, [user]);
+  }, [authUser]);
 console.log(users);
+
+const usersToShow = users?.filter((person) => (person.username !== authUser?.username) && !person.isAdmin)
+console.log(usersToShow);
   return (
     <section className="absolute left-0 flex justify-start p-3 m-2 border border-gray-500">
       <ul className="flex flex-col divide-y divide-gray-100">
-        {users?.map(
+        {usersToShow?.map(
           (person) =>
-            person._id !== user?.id && (
+            person.username !== authUser?.username && (
               <li
                 key={person._id}
                 className="flex justify-between py-5 gap-x-6"

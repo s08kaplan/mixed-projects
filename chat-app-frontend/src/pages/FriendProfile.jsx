@@ -11,11 +11,12 @@ const FriendProfile = () => {
   const { friendId } = useParams();
   const { getUsers, sendFriendRequest } = useUsers();
   const [userInfo, setUserInfo] = useState({});
+  
 
   console.log("user: ",user);
-  const userIds = userDetail[0]?.friends.map(usr => usr._id)
-  console.log(userIds);
-  const isFriend = user?.friends.find((person) =>person.includes(userIds));
+  // const userIds = userDetail[0]?.friends.map(usr => usr._id)
+  // console.log(userIds);
+  const isFriend = user?.friends.find((person) =>person.includes(friendId));
   
   console.log(isFriend);
   console.log(userDetail);

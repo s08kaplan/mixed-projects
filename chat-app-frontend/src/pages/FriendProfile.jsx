@@ -14,8 +14,7 @@ const FriendProfile = () => {
   
 
   console.log("user: ",user);
-  // const userIds = userDetail[0]?.friends.map(usr => usr._id)
-  // console.log(userIds);
+ 
   const isFriend = user?.friends.find((person) =>person.includes(friendId));
   
   console.log(isFriend);

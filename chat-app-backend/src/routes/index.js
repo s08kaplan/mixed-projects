@@ -14,4 +14,7 @@ router.use('/tokens', require('./token'))
 // room:
 router.use('/rooms', require('./room'))
 
+// message:
+router.use('/messages', require('./message'))
+
 module.exports = router

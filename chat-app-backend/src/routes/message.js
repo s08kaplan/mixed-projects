@@ -1,4 +1,5 @@
-
+"use strict";
+const router = require("express").Router();
 
 const Message = require("../controllers/message");
 

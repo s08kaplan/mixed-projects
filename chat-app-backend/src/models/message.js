@@ -17,7 +17,7 @@ const MessageSchema = new Schema(
       {
         sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
         content: { type: String, trim: true, required: true },
-        receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        receiver: { type: Schema.Types.ObjectId, ref: "User" },
         isRead: { type: Boolean, default: false },
       },
     ],

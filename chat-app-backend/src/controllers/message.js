@@ -5,7 +5,7 @@ const Room = require("../models/room");
 
 module.exports = {
   list: async (req, res) => {
-    const data = await getModelList.find(Message);
+    const data = await res.getModelList(Message);
     res.status(200).send({
       error: false,
       data,
@@ -14,7 +14,65 @@ module.exports = {
   },
 
   create: async (req, res) => {
-    const data = await Message.create(req.body);
+    const { sender, receiver, content } = req.body;
+    // if (!roomId) {
+    //   const room = await Room.create({
+    //     name: "DM",
+    //     createdBy: sender,
+    //     members: [{ userId: sender }, { userId: receiver }],
+    //   });
+    //   console.log("room info in message create: ", room);
+    //   const data = await Message.create({
+    //     ...req.body,
+    //     roomId: room._id,
+    //     messages: [{ content, sender }],
+    //   });
+    //   res.status(201).send({
+    //     error: false,
+    //     data,
+    //   });
+    // } else {
+    //   const data = await Message.findOneAndUpdate(
+    //     { roomId },
+    //     { $push: { messages: { content, sender } } },
+    //     { new: true }
+    //   );
+    //   res.status(201).send({
+    //     error: false,
+    //     data,
+    //   });
+    // }
+    const room = await Room.findOne({
+      members: { $all: [{ userId: sender }, { userId: receiver }] },
+    });
+
+    let roomId;
+
+    if (!room) {
+    
+      const newRoom = await Room.create({
+        name: "DM",
+        createdBy: sender,
+        members: [{ userId: sender }, { userId: receiver }],
+      });
+      roomId = newRoom._id; 
+    } else {
+      roomId = room._id; 
+    }
+
+  
+    const messageData = {
+      content,
+      sender,
+      receiver,
+    };
+
+    const data = await Message.findOneAndUpdate(
+      { roomId },
+      { $push: { messages: messageData } },
+      { new: true, upsert: true }
+    );
+
     res.status(201).send({
       error: false,
       data,

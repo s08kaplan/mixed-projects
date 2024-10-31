@@ -15,52 +15,29 @@ module.exports = {
 
   create: async (req, res) => {
     const { sender, receiver, content } = req.body;
-    // if (!roomId) {
-    //   const room = await Room.create({
-    //     name: "DM",
-    //     createdBy: sender,
-    //     members: [{ userId: sender }, { userId: receiver }],
-    //   });
-    //   console.log("room info in message create: ", room);
-    //   const data = await Message.create({
-    //     ...req.body,
-    //     roomId: room._id,
-    //     messages: [{ content, sender }],
-    //   });
-    //   res.status(201).send({
-    //     error: false,
-    //     data,
-    //   });
-    // } else {
-    //   const data = await Message.findOneAndUpdate(
-    //     { roomId },
-    //     { $push: { messages: { content, sender } } },
-    //     { new: true }
-    //   );
-    //   res.status(201).send({
-    //     error: false,
-    //     data,
-    //   });
-    // }
+
     const room = await Room.findOne({
-      members: { $all: [{ userId: sender }, { userId: receiver }] },
+      members: {
+        $all: [
+          { $elemMatch: { userId: sender } },
+          { $elemMatch: { userId: receiver } },
+        ],
+      },
     });
 
     let roomId;
 
     if (!room) {
-    
       const newRoom = await Room.create({
         name: "DM",
         createdBy: sender,
         members: [{ userId: sender }, { userId: receiver }],
       });
-      roomId = newRoom._id; 
+      roomId = newRoom._id;
     } else {
-      roomId = room._id; 
+      roomId = room._id;
     }
 
-  
     const messageData = {
       content,
       sender,

@@ -61,6 +61,7 @@ const FriendProfile = () => {
     }
     try {
       const { data } = await axiosWithToken.post("messages",postData)
+      console.log(data);
     } catch (error) {
       console.error(error);
       

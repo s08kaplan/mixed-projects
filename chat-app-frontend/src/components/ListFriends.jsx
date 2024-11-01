@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
+import useUsers from '../custom-hooks/useUsers';
+import { useNavigate } from 'react-router-dom';
 
 const ListFriends = () => {
     const { userDetail } = useSelector((state) => state.users);
+    const { user } = useSelector((state) => state.auth);
+    const { getUsers } = useUsers();
     console.log(userDetail);
+
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+      if (!user?.id) navigate("/");
+      getUsers(user?.id, "userDetail");
+    }, [user?.id, navigate]);
   return (
     <article>
     {

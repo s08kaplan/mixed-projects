@@ -7,18 +7,19 @@ import avatar from "../assets/avatar.png";
 import useUsers from "../custom-hooks/useUsers";
 import ListFriends from "../components/ListFriends";
 import FriendStatus from "../components/FriendStatus";
+import MessageHistory from "../components/MessageHistory";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
   const { userDetail } = useSelector((state) => state.users);
-  const { axiosWithToken } = useAxios();
-  const { getUsers } = useUsers();
+  // const { axiosWithToken } = useAxios();
+  // const { getUsers } = useUsers();
 
-  const [roomsByUser, setRoomsByUser] = useState([]);
-  const navigate = useNavigate();
-  console.log(user);
-  console.log(userDetail);
-  console.log(userDetail[0]?.receivedRequests);
+  // const [roomsByUser, setRoomsByUser] = useState([]);
+  // const navigate = useNavigate();
+  // console.log(user);
+  // console.log(userDetail);
+  // console.log(userDetail[0]?.receivedRequests);
 
   // const getRequest = async () => {
   //   try {
@@ -30,23 +31,24 @@ const Profile = () => {
   //   }
   // }
 
-  const getRoomsCreatedByUser = async () => {
-    try {
-      const { data } = await axiosWithToken(
-        `rooms?filter[createdBy]=${user?.id}`
-      );
-      console.log(data);
-      setRoomsByUser(data?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    if (!user?.id) navigate("/");
-    getUsers(user?.id, "userDetail");
-    // getRequest()
-    getRoomsCreatedByUser();
-  }, [user?.id, navigate]);
+  // const getRoomsCreatedByUser = async () => {
+  //   try {
+  //     const { data } = await axiosWithToken(
+  //       `rooms?filter[createdBy]=${user?.id}`
+  //     );
+  //     console.log(data);
+  //     setRoomsByUser(data?.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+ 
+  // useEffect(() => {
+  //   if (!user?.id) navigate("/");
+  //   getUsers(user?.id, "userDetail");
+  //   // getRequest()
+  //   // getRoomsCreatedByUser();
+  // }, [user?.id, navigate]);
 
 
   return (
@@ -66,7 +68,7 @@ const Profile = () => {
         </section>
       </article>
       {/* right  groups */}
-      <article className="">
+      {/* <article className="">
         {roomsByUser?.map((rooms) => (
           <div
             key={rooms._id}
@@ -74,10 +76,11 @@ const Profile = () => {
             className="hover:cursor-pointer"
           >
             <div></div>
-            <span>{rooms.name}</span>
+            {rooms.name != "DM" && <span>{rooms.name}</span>}
           </div>
         ))}
-      </article>
+      </article> */}
+      <MessageHistory/>
      <ListFriends/>
     </section>
   );

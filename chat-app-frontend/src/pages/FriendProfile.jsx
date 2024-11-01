@@ -62,6 +62,8 @@ const FriendProfile = () => {
     try {
       const { data } = await axiosWithToken.post("messages",postData)
       console.log(data);
+      getMessages()
+      setContent("")
     } catch (error) {
       console.error(error);
       
@@ -91,6 +93,7 @@ const FriendProfile = () => {
             <input
               id="message"
               name="message"
+              value={content || ""}
               type="text"
               required
               onChange={handleChange}

@@ -62,7 +62,7 @@ const Profile = () => {
           <img
             src={user?.image || avatar}
             alt="profile image"
-            className="w-16"
+            className="w-16 rounded-full"
           />{" "}
           <span>{user?.username}</span>
         </section>

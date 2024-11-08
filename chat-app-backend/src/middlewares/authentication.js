@@ -19,3 +19,13 @@ module.exports = async (req, res, next) => {
   }
   next();
 };
+
+exports.socketMiddleware = (socket, next) => {
+  const token = socket.handshake.auth.token
+  if(token) {
+    socket.userId = getUserIdFromToken(token)
+    next()
+  }else{
+    next(new Error("Authentication error"))
+  }
+}

@@ -1,8 +1,14 @@
 "use strict";
 
+const http = require("http")
+const socketIo = require("socket.io")
 const express = require("express");
 const app = express();
 
+const server = http.createServer(app)
+const io = socketIo(server)
+
+const { socketMiddleware } = require("./src/middlewares/authentication")
 
 
 // envVariables to process.env:
@@ -39,6 +45,7 @@ app.use(require("./src/middlewares/queryHandler"));
 
 // Auhentication:
 app.use(require("./src/middlewares/authentication"));
+io.use(socketMiddleware)
 
 // Routes:
 
@@ -63,11 +70,52 @@ app.all("*", (req, res) => {
 
 /* ------------------------------------------------------- */
 
+// ! SOCKET
+io.on('connection', (socket) => {
+  console.log(`User connected: ${socket.userId}`);
+
+  // Join a room (group chat) or DM
+  socket.on('join_room', (roomId) => {
+    socket.join(roomId);
+  });
+
+  // Send message to a room
+  socket.on('send_message', async ({ roomId, receiverId, content }) => {
+    const messageData = {
+      sender: socket.userId,
+      content,
+    };
+
+    if (roomId) {
+      // Group chat
+      messageData.room = roomId;
+      await new Message(messageData).save();
+      io.to(roomId).emit('receive_message', messageData);
+    } else if (receiverId) {
+      // Direct message
+      messageData.receiver = receiverId;
+      await new Message(messageData).save();
+
+      // Create a unique room for the DM
+      const dmRoom = [socket.userId, receiverId].sort().join('_');
+      io.to(dmRoom).emit('receive_message', messageData);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`User disconnected: ${socket.userId}`);
+  });
+});
+
+
+// !------
+
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
 
 // RUN SERVER:
-app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
+// app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
+server.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
 
 /* ------------------------------------------------------- */
 // Syncronization (must be in commentLine):

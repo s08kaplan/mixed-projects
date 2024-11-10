@@ -48,7 +48,7 @@ module.exports = {
       { roomId },
       { $push: { messages: messageData } },
       { new: true, upsert: true }
-    );
+    ).populate('messages.sender messages.receiver');
 
     res.status(201).send({
       error: false,

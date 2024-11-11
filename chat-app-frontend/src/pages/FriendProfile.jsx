@@ -5,6 +5,7 @@ import useUsers from "../custom-hooks/useUsers";
 import { useSelector } from "react-redux";
 import { VscSend } from "react-icons/vsc";
 import useAxios from "../custom-hooks/useAxios";
+import ChatWithSelectedFriend from "../components/ChatWithSelectedFriend";
 
 const FriendProfile = () => {
   const { userDetail } = useSelector((state) => state.users);
@@ -47,31 +48,31 @@ const FriendProfile = () => {
       
     }
   }
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setContent(e.target.value)
-  }
+  // const handleChange = (e) => {
+  //   console.log(e.target.value);
+  //   setContent(e.target.value)
+  // }
 
-  const sendMessage = async () => {
-    if(content.trim() == "") return
-    const postData = {
-      content,
-      sender: user.id,
-      receiver: friendId
-    }
-    try {
-      const { data } = await axiosWithToken.post("messages",postData)
-      console.log(data);
-      getMessages()
-      setContent("")
-    } catch (error) {
-      console.error(error);
+  // const sendMessage = async () => {
+  //   if(content.trim() == "") return
+  //   const postData = {
+  //     content,
+  //     sender: user.id,
+  //     receiver: friendId
+  //   }
+  //   try {
+  //     const { data } = await axiosWithToken.post("messages",postData)
+  //     console.log(data);
+  //     getMessages()
+  //     setContent("")
+  //   } catch (error) {
+  //     console.error(error);
       
-    }
-  }
+  //   }
+  // }
 
   return (
-    <section>
+    <section className="py-8">
       <article className="flex flex-col items-center justify-center gap-2 p-2">
         <img
           src={
@@ -84,22 +85,26 @@ const FriendProfile = () => {
         />
         <span>{userDetail[0]?.username}</span>
       </article>
+      {/* <article>
+        <ChatWithSelectedFriend/>
+      </article> */}
       <article className="flex justify-center">
         {isFriend ? (
-          <div className="flex items-center gap-2 mt-2 ">
-            <button onClick={sendMessage}  className="flex items-center justify-center w-12 h-8 transition-colors duration-200 border border-white-800 hover:bg-indigo-800 hover:border-lime-500">
-              <VscSend className="text-2xl transition-colors duration-200 hover:text-sky-500" />
-            </button>
-            <input
-              id="message"
-              name="message"
-              value={content || ""}
-              type="text"
-              required
-              onChange={handleChange}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
-          </div>
+          // <div className="flex items-center gap-2 mt-2 ">
+          //   <button onClick={sendMessage}  className="flex items-center justify-center w-12 h-8 transition-colors duration-200 border border-white-800 hover:bg-indigo-800 hover:border-lime-500">
+          //     <VscSend className="text-2xl transition-colors duration-200 hover:text-sky-500" />
+          //   </button>
+          //   <input
+          //     id="message"
+          //     name="message"
+          //     value={content || ""}
+          //     type="text"
+          //     required
+          //     onChange={handleChange}
+          //     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          //   />
+          // </div>
+          <ChatWithSelectedFriend/>
         ) : (
           <button onClick={friendRequest}  className="flex w-[60%] justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Send friend request

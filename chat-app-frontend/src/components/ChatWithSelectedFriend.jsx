@@ -1,106 +1,129 @@
-import React, { useEffect, useState } from 'react'
-import useAxios from '../custom-hooks/useAxios'
-import { useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import useAxios from "../custom-hooks/useAxios";
+import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 import { VscSend } from "react-icons/vsc";
-
 
 const ChatWithSelectedFriend = () => {
   const { user } = useSelector((state) => state.auth);
-  const [content, setContent] = useState("")
-  const [chatHistory, setChatHistory] = useState([])
-  const { axiosWithToken } = useAxios()
+  const [content, setContent] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const { axiosWithToken } = useAxios();
   const { friendId } = useParams();
   // const { state:{username, image, id} } = useLocation()
-  const location = useLocation()
- const username = location?.state?.username
- const image = location?.state?.image
- const id = location?.state?.id
+  const location = useLocation();
+  const username = location?.state?.username;
+  const image = location?.state?.image;
+  const id = location?.state?.id;
 
   console.log(username);
   console.log(image);
   console.log(id);
   console.log(user);
-  
+
   const getMessages = async () => {
     try {
-      const { data } = await axiosWithToken("messages")
+      const { data } = await axiosWithToken("messages");
       console.log(data);
-      setChatHistory(data?.data[0]?.messages)
+      setChatHistory(data?.data[0]?.messages);
     } catch (error) {
       console.error(error);
-      
     }
-  }
+  };
 
   useEffect(() => {
-  getMessages()
-  }, [friendId])
-  
+    getMessages();
+  }, [friendId]);
 
   const handleChange = (e) => {
     console.log(e.target.value);
-    setContent(e.target.value)
-  }
-  
+    setContent(e.target.value);
+  };
+
   const sendMessage = async () => {
-    if(content.trim() == "") return
+    if (content.trim() == "") return;
     const postData = {
       content,
       sender: user.id,
-      receiver: friendId
-    }
+      receiver: friendId,
+    };
     try {
-      const { data } = await axiosWithToken.post("messages",postData)
+      const { data } = await axiosWithToken.post("messages", postData);
       console.log(data);
-      getMessages()
-      setContent("")
+      getMessages();
+      setContent("");
     } catch (error) {
       console.error(error);
-      
     }
-  }
+  };
   console.log(chatHistory);
   return (
-    <section>
-      <figure>
-        {
-          chatHistory?.map(chat => (
-            <div key={chat._id} className='flex justify-between sm:w-[340px] md:[600px] lg:w-[900px] bg:[rgba(255,255,255,0.8)]'>
-              {<div>
-                {/* receiver: {chat.receiver} */}
-                <img src={image} alt="profile-photo" className='w-16 h-16 rounded-full' />
-                <div>
-                  {chat.sender == friendId && chat.content }
-                </div>
-              </div>}
-           {  <div>
-                {/* sender:{chat.sender} */}
-                <img src={user?.image} alt="profile-photo" className='w-16 h-16 rounded-full' />
-                <div>
-                  {chat.sender == user?.id && chat.content }
-                </div>
-              </div>}
-            </div>
-          ))
-        }
-      </figure>
-      <div className="flex items-center gap-2 mt-2 ">
-            <button onClick={sendMessage}  className="flex items-center justify-center w-12 h-8 transition-colors duration-200 border border-white-800 hover:bg-indigo-800 hover:border-lime-500">
-              <VscSend className="text-2xl transition-colors duration-200 hover:text-sky-500" />
-            </button>
-            <input
-              id="message"
-              name="message"
-              value={content || ""}
-              type="text"
-              required
-              onChange={handleChange}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-            />
-          </div>
-    </section>
-  )
-}
+    <section aria-labelledby="chat-title" className="mt-5">
+      <header id="chat-title" className="sr-only">
+        <h2>Chat Conversation</h2>
+      </header>
 
-export default ChatWithSelectedFriend
+      <article className="flex flex-col gap-4 mb-5">
+        {chatHistory?.map((chat) => (
+          <div key={chat._id} className="flex flex-col gap-2">
+            <div
+              className={`flex ${
+                chat.sender === friendId ? "justify-start" : "justify-end"
+              }`}
+            >
+              <div
+                className={`flex items-center gap-3 p-4 rounded-lg shadow-md max-w-xs md:max-w-sm lg:max-w-md ${
+                  chat.sender === friendId
+                    ? "bg-white/80 backdrop-blur-sm"
+                    : "bg-indigo-500 text-white"
+                }`}
+              >
+                {chat.sender === friendId && (
+                  <img
+                    src={image}
+                    alt="Friend's profile"
+                    className="w-10 h-10 rounded-full"
+                  />
+                )}
+                <p className="text-sm sm:text-base">{chat.content}</p>
+                {chat.sender === user?.id && (
+                  <img
+                    src={user?.image}
+                    alt="Your profile"
+                    className="w-10 h-10 rounded-full"
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </article>
+
+      <footer className="flex items-center gap-2 px-2 mt-2">
+        <label htmlFor="message" className="sr-only">
+          Type your message
+        </label>
+        <input
+          id="message"
+          name="message"
+          value={content || ""}
+          type="text"
+          required
+          onChange={handleChange}
+          placeholder="Type a message..."
+          className="w-full px-4 py-2 text-gray-800 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-600"
+          aria-label="Type your message"
+        />
+        <button
+          onClick={sendMessage}
+          className="flex items-center justify-center w-10 h-10 text-white transition duration-200 bg-indigo-500 rounded-full hover:bg-indigo-600"
+          aria-label="Send message"
+        >
+          <VscSend className="text-lg" />
+        </button>
+      </footer>
+    </section>
+  );
+};
+
+export default ChatWithSelectedFriend;

@@ -23,7 +23,7 @@ const ChatWithSelectedFriend = () => {
 
   const getMessages = async () => {
     try {
-      const { data } = await axiosWithToken("messages");
+      const { data } = await axiosWithToken(`messages?filter[messages.sender]=${user?.id}&filter[messages.receiver]=${friendId}`);
       console.log(data);
       setChatHistory(data?.data[0]?.messages);
     } catch (error) {

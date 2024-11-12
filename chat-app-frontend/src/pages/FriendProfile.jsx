@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useAuthCalls from "../custom-hooks/useAuthCalls";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useUsers from "../custom-hooks/useUsers";
 import { useSelector } from "react-redux";
 import { VscSend } from "react-icons/vsc";
 import useAxios from "../custom-hooks/useAxios";
 import ChatWithSelectedFriend from "../components/ChatWithSelectedFriend";
+import { isPending } from "@reduxjs/toolkit";
 
 const FriendProfile = () => {
   const { userDetail } = useSelector((state) => state.users);
@@ -13,13 +14,18 @@ const FriendProfile = () => {
   const { friendId } = useParams();
   const { getUsers, sendFriendRequest } = useUsers();
   const { axiosWithToken } = useAxios()
-  const [userInfo, setUserInfo] = useState({});
-  const [content, setContent] = useState("")
+ const [friendRequestStatus, setFriendRequestStatus] = useState({
+  isPending:false,
+  isSuccess:false,
+  isError:false,
+  message:""
+ })
   
+ const navigate = useNavigate()
 
   console.log("user: ",user);
  
-  const isFriend = user?.friends.find((person) =>person.includes(friendId));
+  const isFriend = user?.friends.find((person) =>person.includes(friendId)) || userDetail[0]?.friends.find((person) => person._id == user?.id);
   
   console.log(isFriend);
   console.log(userDetail);
@@ -39,14 +45,17 @@ const FriendProfile = () => {
       
     }
   }
-
+  
   const friendRequest = async () => {
+    setFriendRequestStatus(()=>({isPending:true,isSuccess:false,isError:false}))
     try {
     await sendFriendRequest("userDetail",{"recipientId":friendId})
+    setFriendRequestStatus(()=>({isPending:false,isSuccess:true}))
     } catch (error) {
       console.error("friend request fail: ", error);
-      
+      setFriendRequestStatus(()=>({isPending:false,isSuccess:false,isError:true}))
     }
+    friendRequestStatus.isError == false ? setFriendRequestStatus(()=> ({message:"friend request sent successfully"})) : setFriendRequestStatus(()=> ({message:"Something went wrong try sending friend request again"})) 
   }
   // const handleChange = (e) => {
   //   console.log(e.target.value);
@@ -106,8 +115,8 @@ const FriendProfile = () => {
           // </div>
           <ChatWithSelectedFriend/>
         ) : (
-          <button onClick={friendRequest}  className="flex w-[60%] justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Send friend request
+          <button onClick={friendRequest} disabled={friendRequestStatus.isPending}  className="flex w-[60%] justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            {friendRequestStatus.isPending ? "Sending..." : "Send friend request"}
           </button>
         )}
       </article>

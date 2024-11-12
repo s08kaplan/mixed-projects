@@ -33,6 +33,8 @@ const ChatWithSelectedFriend = () => {
 
   useEffect(() => {
     getMessages();
+    const interval = setInterval(getMessages, 30000);
+    return () => clearInterval(interval);
   }, [friendId]);
 
   const handleChange = (e) => {

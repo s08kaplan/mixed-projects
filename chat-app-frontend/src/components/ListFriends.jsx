@@ -21,7 +21,7 @@ const ListFriends = () => {
       userDetail && userDetail[0]?.friends?.map(friend => (
         <section key={friend._id}>
           <div onClick={()=>navigate(`/friend-profile/${friend._id}`,{state:{username:friend.username,image:friend.image,id:friend._id}})}  className="overflow-hidden rounded-full hover:cursor-pointer">
-            <img src={friend.image} alt="profile photo" className="object-cover w-10 rounded-full hover:scale-150" />
+            <img src={friend.image} alt="profile photo" className="object-cover w-10 h-10 rounded-full hover:scale-150" />
           </div>
          <div>{friend.username}</div>  
         </section>

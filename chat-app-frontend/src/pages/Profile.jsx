@@ -42,7 +42,7 @@ const Profile = () => {
   //     console.log(error);
   //   }
   // };
- 
+
   // useEffect(() => {
   //   if (!user?.id) navigate("/");
   //   getUsers(user?.id, "userDetail");
@@ -50,15 +50,15 @@ const Profile = () => {
   //   // getRoomsCreatedByUser();
   // }, [user?.id, navigate]);
 
-
   return (
-    <section className="flex justify-center text-primary">
+    <section className="flex items-center justify-between p-5 text-primary">
       {/* left friends list to chat*/}
-      <FriendStatus/>
+      <div>
+        <FriendStatus />
+      </div>
       {/* main messaging */}
       <article className="flex-2">
         <section className="flex flex-col items-center justify-end">
-          user info
           <img
             src={user?.image || avatar}
             alt="profile image"
@@ -68,20 +68,12 @@ const Profile = () => {
         </section>
       </article>
       {/* right  groups */}
-      {/* <article className="">
-        {roomsByUser?.map((rooms) => (
-          <div
-            key={rooms._id}
-            onClick={() => navigate(`/rooms/${rooms._id}`)}
-            className="hover:cursor-pointer"
-          >
-            <div></div>
-            {rooms.name != "DM" && <span>{rooms.name}</span>}
-          </div>
-        ))}
-      </article> */}
-      <MessageHistory/>
-     <ListFriends/>
+      <div>
+        <MessageHistory />
+      </div>
+      <div>
+        <ListFriends />
+      </div>
     </section>
   );
 };

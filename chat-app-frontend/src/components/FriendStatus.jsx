@@ -10,15 +10,9 @@ const FriendStatus = () => {
         // console.log(e.target.textContent);
         console.log(id);
         const { textContent } = e.target
-        // if( textContent == "Accept" ){
-        //   const { data } = await axiosWithToken.post("users/accept-friend-request",{senderId:id})
-        // console.log(data);
-        // }else {
-        //   const { data } = await axiosWithToken.post("users/decline-friend-request",{senderId:id})
-        //   console.log(data);
-        // }
+     
         textContent == "Accept"  ? await axiosWithToken.post("users/accept-friend-request",{senderId:id}) : await axiosWithToken.post("users/decline-friend-request",{senderId:id})
-        
+        window.location.reload()
       }
   return (
     <article className="flex-1">

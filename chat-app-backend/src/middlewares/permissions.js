@@ -1,7 +1,5 @@
 "use strict"
 
-// AUTHORIZATION
-
 module.exports = {
 
     isLogin: (req, res, next) => {

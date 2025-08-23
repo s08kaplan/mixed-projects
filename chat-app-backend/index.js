@@ -11,16 +11,10 @@ const io = socketIo(server)
 const { socketMiddleware } = require("./src/middlewares/authentication")
 
 
-// envVariables to process.env:
-require("dotenv").config();
+
 const PORT = process.env?.PORT || 8000;
 const HOST = process.env?.HOST || "127.0.0.1";
 
-// asyncErrors to errorHandler:
-require("express-async-errors");
-
-/* ------------------------------------------------------- */
-// Configrations:
 
 // Connect to DB:
 const { dbConnection } = require("./src/configs/dbConnection");
@@ -49,8 +43,7 @@ io.use(socketMiddleware)
 
 // Routes:
 
-// routes/index.js:
-app.use("/", require("./src/routes/"));
+
 
 // HomePath:
 app.all("/", (req, res) => {
@@ -60,6 +53,10 @@ app.all("/", (req, res) => {
     user: req.user
   });
 });
+
+// routes/index.js:
+app.use("/", require("./src/routes/"));
+
 app.all("*", (req, res) => {
   res.status(404).send({
     error: true,

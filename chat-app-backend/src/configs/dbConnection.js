@@ -1,7 +1,5 @@
 "use strict"
-/* -------------------------------------------------------
-    NODEJS EXPRESS | MIDNIGHT CODERS HOTEL API
-------------------------------------------------------- */
+
 // MongoDB Connection:
 
 const mongoose = require('mongoose')
@@ -13,7 +11,7 @@ const dbConnection = function() {
         .catch((err) => console.log('* DB Not Connected * ', err))
 }
 
-/* ------------------------------------------------------- */
+
 module.exports = {
     mongoose,
     dbConnection

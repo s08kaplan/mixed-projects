@@ -1,7 +1,7 @@
 services:
   backend:
     build: .
-    image: chat-app-backend
+    container_name: chat-app-backend
     ports:
       - "8000:8000"
     env_file:
@@ -9,8 +9,40 @@ services:
     restart: on-failure  
     depends_on:
       - mongo
+      - redis
+      - rabbitmq
+    volumes:
+      - .:/chat/backend  
+
+  worker:
+    build: .
+    container_name: chat-worker
+    command: node src/workers/messageWorker.js
+    env_file:
+      - .env      
+    depends_on:
+      - mongo
+      - redis
+      - rabbitmq 
+    volumes:
+      - .:/chat/backend    
 
   mongo:
     image: mongo
+    container_name: chat-mongo
     ports:
       - "27018:27017"
+  redis:
+    image: redis
+    container_name: chat-redis
+    ports:
+      - "6380:6379"    
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: chat-rabbitmq
+    ports:
+      - "5673:5672"   
+      - "15673:15672" 
+volumes:
+  mongo_data:      
+    

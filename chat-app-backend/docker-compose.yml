@@ -1,18 +1,19 @@
 services:
   backend:
     build: .
-    container_name: chat-app-backend
+    container_name: chat-app
     ports:
       - "8000:8000"
     env_file:
       - .env
     restart: on-failure  
     depends_on:
-      - mongo
+      #- mongo
       - redis
       - rabbitmq
     volumes:
-      - .:/chat/backend  
+      - .:/chat/backend:cached  
+      - /chat/backend/node_modules
 
   worker:
     build: .
@@ -21,17 +22,18 @@ services:
     env_file:
       - .env      
     depends_on:
-      - mongo
+     # - mongo
       - redis
       - rabbitmq 
     volumes:
-      - .:/chat/backend    
+      - .:/chat/backend   
+      - node_modules:/chat/backend/node_modules
 
-  mongo:
-    image: mongo
-    container_name: chat-mongo
-    ports:
-      - "27018:27017"
+  #mongo:
+   # image: mongo
+   # container_name: chat-mongo
+   # ports:
+   #   - "27018:27017"
   redis:
     image: redis
     container_name: chat-redis
@@ -44,5 +46,7 @@ services:
       - "5673:5672"   
       - "15673:15672" 
 volumes:
-  mongo_data:      
+  node_modules:      
+#volumes:
+  #mongo_data:      
     
